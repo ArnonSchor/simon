@@ -1,8 +1,8 @@
 var gamePattern=[];
 var buttonColors = ["red", "blue", "green", "yellow"];
-var level= 0
-var userClickedPattern=[]
-
+var level= 0;
+var userClickedPattern=[];
+var started=false;
 
 function nextSequence() {
      userClickedPattern=[]
@@ -25,11 +25,14 @@ function animatePress(currentColor) {
     }, 100);
 }
   
- function keyPress(){$(document).one("keypress", function() {
-     nextSequence();
-     $("#level-title").text("Level "+level);
-});}
-keyPress();
+$(document).keypress(function() {
+    if (!started) {
+      $("#level-title").text("Level " + level);
+      nextSequence();
+      started = true;
+    }
+  });
+
 
 $(".btn").click (function(event){
     var userChosenColor=event.target.id;
@@ -61,5 +64,5 @@ function playSound(name){
 function startOver(){
     level= [];
     gamePattern= [];
-keyPress();
+started=false;
    };
